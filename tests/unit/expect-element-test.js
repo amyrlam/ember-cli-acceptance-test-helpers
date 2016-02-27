@@ -27,7 +27,9 @@ function makeElements(elementType, options, count){
 
 function makeApp(findFn){
   return {
-    testHelpers: { find: findFn },
+    testHelpers: {
+      find: (...args) => $(findFn(...args))
+    },
     $: $
   };
 }
@@ -135,10 +137,10 @@ test('can be passed a number and option `contains`', function(assert) {
 
 test('option `contains` filters the elements', function(assert) {
   var find = function(){
-    return $([
+    return [
       makeElement('div', {class:'the-div'}),
       makeElement('div', {class:'the-div', text: 'foo bar'})
-    ]);
+    ];
   };
 
   var app = makeApp(find);
@@ -158,7 +160,6 @@ test('expectElement fails with a custom message', function(assert) {
   let app = makeApp(() => []);
   let message = 'custom test label message';
 
-  // {message: message}
   let result = expectElement(app, '.not-present', {message});
 
   assert.ok(!result.ok, 'pre cond: fails');
@@ -178,4 +179,14 @@ test('expectElement passes with a custom message', function(assert) {
   assert.ok(result.ok, 'pre cond: passes');
 
   assert.equal(result.message, message, 'custom message appears on expectElement pass');
+});
+
+test('expectElement with contains fails with a custom message', function(assert) {
+  let app = makeApp(() => []);
+  let message = 'custom test label message';
+
+  let result = expectElement(app, '.not-present', {contains: 'foo', message});
+
+  assert.ok(!result.ok, 'pre cond: fails');
+  assert.equal(result.message, message, 'custom message appears on expectElement fail');
 });
