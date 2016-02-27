@@ -153,3 +153,14 @@ test('option `contains` filters the elements', function(assert) {
   assert.ok(!result.ok, 'fails');
   assert.equal(result.message, 'Found 2 of .the-div but 0/1 containing "not found"');
 });
+
+test('expectElement fails with a custom message', function(assert) {
+  let app = makeApp(() => []);
+  let message = 'custom message';
+
+  // {message: message}
+  let result = expectElement(app, '.not-present', {message});
+
+  assert.ok(!result.ok, 'pre cond: fails');
+  assert.equal(result.message, message);
+});
