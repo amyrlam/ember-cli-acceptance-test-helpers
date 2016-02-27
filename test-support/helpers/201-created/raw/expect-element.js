@@ -32,8 +32,6 @@ function buildMessage(selector, { filteredCount, selectorCount, ok }, { contains
 }
 
 export default function(app, selector, count, options){
-  // count is optional
-  // options is optional
   if (typeof count === 'object') {
     options = count;
   }
@@ -43,7 +41,7 @@ export default function(app, selector, count, options){
   if (typeof count === 'number') {
     options.count = count;
   }
-  // debugger;
+
   if (options.count === undefined) {
     options.count = 1;
   }
@@ -51,11 +49,6 @@ export default function(app, selector, count, options){
   var elements = app.testHelpers.find(selector, getContext());
 
   var result = {};
-
-  // options
-  // { message: 'whatever', contains: 'thka' }
-  // when would you ever have options with { contains: 'thghha' }?
-  // separate contains and message?
 
   result.selectorCount = elements.length;
 
