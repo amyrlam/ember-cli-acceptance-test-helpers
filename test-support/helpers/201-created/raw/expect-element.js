@@ -10,10 +10,11 @@ export default function(app, selector, count, options){
   }
 
   if (!options) { options = {}; }
-  
+
   if (typeof count === 'number') {
     options.count = count;
   }
+  // debugger;
 
   count = options.count === undefined ? 1 : options.count;
 
@@ -22,6 +23,7 @@ export default function(app, selector, count, options){
   var result = {};
 
   if (options.contains) {
+    // why is options.contains false
     var text = options.contains;
     var filtered = filterElements(elements, text);
 
@@ -40,10 +42,20 @@ export default function(app, selector, count, options){
       }
     }
   } else {
-    result.message = 'Found ' + elements.length + ' of ' + selector;
-    result.ok = elements.length === count;
-    if (!result.ok) {
-      result.message += ' but expected ' + count;
+    // i'm erroring here
+    // want result.message = result.message; ...but this isn't really anything
+
+    if (options.message) {
+      let message = options.message;
+      result.message = message;
+    }
+    else {
+      result.message = 'Foundz ' + elements.length + ' of ' + selector;
+      result.ok = elements.length === count;
+      if (!result.ok) {
+        // and here
+        result.message += ' butz expected ' + count;
+      }
     }
   }
 
