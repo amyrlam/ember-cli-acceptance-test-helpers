@@ -159,7 +159,7 @@ test('expectElement fails with a custom message', function(assert) {
   let message = 'custom message';
 
   // {message: message}
-  let result = expectElement(app, '.not-present', {message});
+  let result = expectElement(app, '.not-present', {message, contains: 'whatever'});
 
   assert.ok(!result.ok, 'pre cond: fails');
   assert.equal(result.message, message);
